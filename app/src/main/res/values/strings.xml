@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">AndroidProject</string>
+    <string name="go_to_the_second">Go to the second</string>
+    <string name="go_to_the_third">Go to the third</string>
+    <string name="go_to_the_first">Go to the first</string>
+    <string name="valhalla">Valhalla</string>
+    <string name="hello">Hello world</string>
+    <string name="fromMain">\" from main activity\"</string>
+    <string name="no_data">no data</string>
+    <string name="click_me">Click me</string>
+    <string name="close_the_app">Close the app</string>
+    <string name="display_text" translatable="false">display text</string>
+    <string name="enter_your_name" translatable="false">Enter your name</string>
+    <string name="enter_your_password" translatable="false">Enter your password</string>
 </resources>

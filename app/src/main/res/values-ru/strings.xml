@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Андройд проект</string>
+    <string name="go_to_the_second">переход на вторую</string>
+    <string name="go_to_the_third">переход на третью</string>
+    <string name="go_to_the_first">переход на первую</string>
+    <string name="valhalla">Valhalla</string>
+    <string name="hello">Привет мир</string>
+    <string name="fromMain">\" from main activity\"</string>
+    <string name="no_data">no data</string>
+    <string name="click_me">Нажми меня</string>
+    <string name="close_the_app">Закрыть приложение</string>
+</resources>
