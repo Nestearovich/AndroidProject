@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidproject.Listner.ItemsListener
@@ -16,6 +17,8 @@ import com.example.androidproject.model.ItemsModel
 class ItemsFragment : Fragment(),ItemsListener {
 
     private lateinit var itemsAdapter: ItemsAdapter
+
+    private val viewModel : ItemsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,82 +36,42 @@ class ItemsFragment : Fragment(),ItemsListener {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
-
         recyclerView.adapter = itemsAdapter
 
-        val listItems = listOf<ItemsModel>(
-            ItemsModel(
-                R.drawable.frut,
-                "ananas",
-            "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "ananas",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.icon,
-                "vergel",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "dante",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.icon,
-                "sleep",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "cry",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "rip",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "spirit",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "death",
-                "13.12.1202"
-            ),
-        )
 
-        itemsAdapter.submitList(listItems.toList())
+       viewModel.getData()
+
+        viewModel.items.observe(viewLifecycleOwner){listItems ->
+            itemsAdapter.submitList(listItems)
+        }
+
+        viewModel.msg.observe(viewLifecycleOwner){msg ->
+            Toast.makeText(context,msg,Toast.LENGTH_SHORT).show()
+        }
+
+        viewModel.bundle.observe(viewLifecycleOwner){navBundle ->
+            val detailFragment = DetailFragment()
+            val bundle = Bundle()
+            bundle.putString("name",navBundle.name)
+            bundle.putString("date",navBundle.date)
+            bundle.putInt("imageView",navBundle.image)
+            detailFragment.arguments =bundle
+
+            parentFragmentManager
+                .beginTransaction()
+                .add(R.id.activity_container,DetailFragment())
+                .addToBackStack("Details")
+                .commit()
+        }
     }
 
+
     override fun onClick() {
-        Toast.makeText(context,"ImageView clicked",Toast.LENGTH_SHORT).show()
+        viewModel.imageViewClicked()
     }
 
     override fun onElementSelected(name: String, date: String, imageView: Int) {
-        val detailFragment = DetailFragment()//экземпляр фрагмента
-        val bundle = Bundle()//bundle - это место где можно хранить
-        bundle.putString("name",name)//ключи должны быть константами
-        bundle.putString("date",date)
-        bundle.putInt("imageView",imageView)
-        detailFragment.arguments =bundle
-
-//TODO add метод мы больше не используем
-            //теперь всегда будем использовать replace
-        //replace всегда будет иметь идли addToBackstack чтобы
-        //могли вернуться назад или же его не будет,чтобы
-        //мы вернулись назад
-        parentFragmentManager
-            .beginTransaction()
-            .add(R.id.activity_container,DetailFragment())
-            .addToBackStack("Details")
-            .commit()
+        viewModel.elementClicked(name, date, imageView)
     }
 
 }
