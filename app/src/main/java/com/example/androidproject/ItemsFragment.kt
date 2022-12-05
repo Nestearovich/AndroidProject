@@ -10,9 +10,13 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidproject.BundleConstant.IMAGE
 import com.example.androidproject.Listner.ItemsListener
 import com.example.androidproject.adapter.ItemsAdapter
 import com.example.androidproject.model.ItemsModel
+import java.util.jar.Attributes
+//НЕ ИСПОЛЬЗОВАТЬ
+ //private const val NAME = "name"
 
 class ItemsFragment : Fragment(),ItemsListener {
 
@@ -46,22 +50,29 @@ class ItemsFragment : Fragment(),ItemsListener {
         }
 
         viewModel.msg.observe(viewLifecycleOwner){msg ->
-            Toast.makeText(context,msg,Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,getString(msg),Toast.LENGTH_SHORT).show()
         }
-
+//одноразовое действие
         viewModel.bundle.observe(viewLifecycleOwner){navBundle ->
-            val detailFragment = DetailFragment()
-            val bundle = Bundle()
-            bundle.putString("name",navBundle.name)
-            bundle.putString("date",navBundle.date)
-            bundle.putInt("imageView",navBundle.image)
-            detailFragment.arguments =bundle
+            if (navBundle != null){
+                val detailFragment = DetailFragment()
+                val bundle = Bundle()
+                bundle.putString(NAME,navBundle.name)
+                bundle.putString(DATE,navBundle.date)
+                bundle.putInt(IMAGE,navBundle.image)
+                detailFragment.arguments =bundle
 
-            parentFragmentManager
-                .beginTransaction()
-                .add(R.id.activity_container,DetailFragment())
-                .addToBackStack("Details")
-                .commit()
+                Toast.makeText(context,"called",Toast.LENGTH_SHORT).show()
+
+                parentFragmentManager
+                    .beginTransaction()
+                    .add(R.id.activity_container,DetailFragment())
+                    .addToBackStack("Details")
+                    .commit()
+
+                viewModel.userNavigated()
+            }
+
         }
     }
 
@@ -72,6 +83,11 @@ class ItemsFragment : Fragment(),ItemsListener {
 
     override fun onElementSelected(name: String, date: String, imageView: Int) {
         viewModel.elementClicked(name, date, imageView)
+    }
+    //WE CAN USE IT,BECAUSE
+    companion object{
+        const val DATE = "date"
+        const val NAME = "name"
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.androidproject
 
+
+import android.media.Image
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.androidproject.BundleConstant.IMAGE
+import com.example.androidproject.ItemsFragment.Companion.DATE
+import com.example.androidproject.ItemsFragment.Companion.NAME
 
 
 class DetailFragment : Fragment() {
@@ -28,9 +33,9 @@ class DetailFragment : Fragment() {
 
         val bundle = arguments
         bundle?.let{ safeBundle ->
-            val name = bundle.getString("name")
-            val date = bundle.getString("date")
-            val image = bundle.getInt("imageView")
+            val name = bundle.getString(NAME)
+            val date = bundle.getString(DATE)
+            val image = bundle.getInt(IMAGE)
 
 
             detailsName.text = name
