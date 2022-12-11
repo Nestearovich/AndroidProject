@@ -1,18 +1,19 @@
-package com.example.androidproject.adapter
+package com.example.androidproject.presentation.adapter
 
 import android.view.TextureView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidproject.Listner.ItemsListener
+import com.example.androidproject.presentation.adapter.Listner.ItemsListener
 import com.example.androidproject.R
+import com.example.androidproject.databinding.ItemFruitBinding
 import com.example.androidproject.model.ItemsModel
 
 class ItemsViewHolder(
-    private val view: View,
+    private val view: ItemFruitBinding,
     private val itemsListener: ItemsListener
-):RecyclerView.ViewHolder(view) {
+):RecyclerView.ViewHolder(viewBinding.root) {
 
    fun bind(itemsModel: ItemsModel){
 
