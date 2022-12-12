@@ -11,22 +11,22 @@ import com.example.androidproject.databinding.ItemFruitBinding
 import com.example.androidproject.model.ItemsModel
 
 class ItemsViewHolder(
-    private val view: ItemFruitBinding,
+    private val viewBinding: ItemFruitBinding,
     private val itemsListener: ItemsListener
 ):RecyclerView.ViewHolder(viewBinding.root) {
 
    fun bind(itemsModel: ItemsModel){
 
-        val name = view.findViewById<TextView>(R.id.textView)
-        val imageView = view.findViewById<ImageView>(R.id.frut)
-       val date = view.findViewById<TextView>(R.id.textV)
+       // val name = view.findViewById<TextView>(R.id.textView)
+       // val imageView = view.findViewById<ImageView>(R.id.frut)
+      // val date = view.findViewById<TextView>(R.id.textV)
        //val date = view.findViewById<TextView>(R.id.textV)
 
-       name.text = itemsModel.name
-       imageView.setBackgroundResource(itemsModel.image)
-       date.text = itemsModel.date   //проинициализировали
+       viewBinding.textView.text = itemsModel.name
+       viewBinding.frut.setBackgroundResource(itemsModel.image)
+       viewBinding.textV.text = itemsModel.date   //проинициализировали
 
-       imageView.setOnClickListener{
+       viewBinding.frut.setOnClickListener{
            itemsListener.onClick()
        }
 
