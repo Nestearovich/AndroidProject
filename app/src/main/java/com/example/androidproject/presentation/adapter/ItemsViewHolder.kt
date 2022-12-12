@@ -11,7 +11,7 @@ import com.example.androidproject.databinding.ItemFruitBinding
 import com.example.androidproject.model.ItemsModel
 
 class ItemsViewHolder(
-    private val viewBinding: ItemFruitBinding,
+    private val viewBinding : ItemFruitBinding,
     private val itemsListener: ItemsListener
 ):RecyclerView.ViewHolder(viewBinding.root) {
 

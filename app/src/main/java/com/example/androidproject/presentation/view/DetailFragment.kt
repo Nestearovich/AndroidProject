@@ -9,8 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentDetailBinding
-import com.example.androidproject.databinding.FragmentItemsBinding
-import com.example.androidproject.databinding.FragmentOnBoardingBinding
+
 
 
 class DetailFragment : Fragment() {
