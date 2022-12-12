@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidproject.BundleConstant.IMAGE
@@ -22,7 +23,9 @@ class ItemsFragment : Fragment(),ItemsListener {
 
     private lateinit var itemsAdapter: ItemsAdapter
 
-    private val viewModel : ItemsViewModel by viewModels()
+    private val viewModel : ItemsViewModel by viewModels{
+        ItemsViewFactory(TestParametr())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
