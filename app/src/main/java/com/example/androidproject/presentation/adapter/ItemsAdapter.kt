@@ -1,9 +1,9 @@
-package com.example.androidproject.adapter
+package com.example.androidproject.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidproject.Listner.ItemsListener
+import com.example.androidproject.presentation.Listner.ItemsListener
 import com.example.androidproject.R
 import com.example.androidproject.model.ItemsModel
 
@@ -11,10 +11,10 @@ class ItemsAdapter(
     private val itemsListener: ItemsListener
 ): RecyclerView.Adapter<ItemsViewHolder>() {
 
-    private var listItems = mutableListOf<ItemsModel>()//не изменно
+    private var listItems = mutableListOf<ItemsModel>()
 
 
-    fun submitList(list:List<ItemsModel>){//может меняться,инициализация
+    fun submitList(list:List<ItemsModel>){
         this.listItems = list.toMutableList()
     }
 
@@ -25,7 +25,7 @@ class ItemsAdapter(
 
     override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {
         holder.bind(listItems[position])
-    }//вью холдер берет элементы по одному,
+    }
 
     override fun getItemCount(): Int {
         return listItems.size

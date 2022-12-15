@@ -3,4 +3,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="imageView_clicked">ImageView clicked</string>
+    <string name="textview">TextView</string>
+    <string name="textview2">TextView</string>
 </resources>

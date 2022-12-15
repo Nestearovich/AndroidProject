@@ -1,24 +1,12 @@
-package com.example.androidproject
+package com.example.androidproject.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.androidproject.R
+import com.example.androidproject.domain.ItemsRepository
 import com.example.androidproject.model.ItemsModel
 
-class ItemsViewModel(
-    private val testParametr: TestParametr
-) : ViewModel() {
+class ItemsRepositoryImpl: ItemsRepository {
 
-    private val _items = MutableLiveData<List<ItemsModel>>()
-    val items : LiveData<List<ItemsModel>> = _items
-
-    private val _msg = MutableLiveData<Int>()
-    val msg: LiveData<Int> = _msg
-
-    private val _bundle = MutableLiveData<NavigateWithBundle?>()
-    val bundle : LiveData<NavigateWithBundle?> = _bundle
-
-    fun getData(){
+    override fun getData():List<ItemsModel>{
         val listItems = listOf<ItemsModel>(
             ItemsModel(
                 R.drawable.frut,
@@ -65,38 +53,32 @@ class ItemsViewModel(
                 "death",
                 "13.12.1202"
             ),
+            ItemsModel(
+                R.drawable.spd,
+                "ananas",
+                "13.12.1202"
+            ),
+            ItemsModel(
+                R.drawable.spd,
+                "ananas",
+                "13.12.1202"
+            ),
+            ItemsModel(
+                R.drawable.spd,
+                "ananas",
+                "13.12.1202"
+            ),
+            ItemsModel(
+                R.drawable.spd,
+                "ananas",
+                "13.12.1202"
+            ),
+            ItemsModel(
+                R.drawable.spd,
+                "ananas",
+                "13.12.1202"
+            ),
         )
-
-        _items.value = listItems
+        return listItems
     }
-
-    fun imageViewClicked(){
-        _msg.value =  R.string.imageView_clicked
-    }
-
-    fun elementClicked(name: String, date: String, imageView: Int){
-        _bundle.value = NavigateWithBundle(image = imageView,
-            name=name,
-            date=date)
-
-
-    }
-
-    fun userNavigated(){
-        _bundle.value = null
-    }
-
-}
-
-
-
-data class NavigateWithBundle(
-    val image: Int,
-    val name: String,
-    val date: String
-)
-
-
-class TestParametr(){
-
 }
