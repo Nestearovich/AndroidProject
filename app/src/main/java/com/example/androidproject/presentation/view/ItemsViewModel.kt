@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.androidproject.domain.ItemsInteractor
 import com.example.androidproject.model.ItemsModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ItemsViewModel(
+@HiltViewModel
+class ItemsViewModel @Inject constructor(
     private val itemsInteractor: ItemsInteractor,
 ) : ViewModel() {
 

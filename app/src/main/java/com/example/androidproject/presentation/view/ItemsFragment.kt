@@ -18,15 +18,14 @@ import com.example.androidproject.presentation.Listner.ItemsListener
 import com.example.androidproject.presentation.adapter.ItemsAdapter
 import com.example.androidproject.utils.BundleConstant.DATE
 import com.example.androidproject.utils.BundleConstant.NAME
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ItemsFragment : Fragment(), ItemsListener {
 
     private lateinit var itemsAdapter: ItemsAdapter
 
-    private val viewModel : ItemsViewModel by viewModels{
-        ItemsViewFactory(ItemsInteractor(ItemsRepositoryImpl()))
-    }
+    private val viewModel : ItemsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewHandler"
-            type="com.example.androidproject.presentation.databinding.ViewHandler" />
+            type="com.example.androidproject.presentation.databinding.LoginFragment.ViewHandler" />
         <variable
             name="viewModel"
             type="com.example.androidproject.presentation.databinding.LoginViewModel" />

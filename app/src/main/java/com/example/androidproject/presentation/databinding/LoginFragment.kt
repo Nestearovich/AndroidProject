@@ -33,7 +33,7 @@ class LoginFragment : Fragment() {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewHandler = ViewHandler()
+        //binding.viewHandler = ViewHandler()
     }
 
     inner class ViewHandler{
