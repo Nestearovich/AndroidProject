@@ -55,7 +55,7 @@ class DetailFragment : Fragment() {
             detailsImage.setBackgroundResource(image)
         }
 
-        viewBinding.nav.observe(viewLifecycleOwner){
+        viewModel.nav.observe(viewLifecycleOwner){
             parentFragmentManager.beginTransaction()
                 .replace(R.id.activity_container,LoginFragment())
                 .commit()
