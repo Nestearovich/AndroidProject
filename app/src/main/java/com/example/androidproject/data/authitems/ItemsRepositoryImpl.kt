@@ -1,8 +1,8 @@
-package com.example.androidproject.data
+package com.example.androidproject.data.authitems
 
 import com.example.androidproject.R
-import com.example.androidproject.domain.ItemsRepository
-import com.example.androidproject.model.ItemsModel
+import com.example.androidproject.domain.items.ItemsRepository
+import com.example.androidproject.domain.model.ItemsModel
 import javax.inject.Inject
 
 

@@ -1,9 +1,8 @@
-package com.example.androidproject.presentation.view
+package com.example.androidproject.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.androidproject.ItemsViewModel
-import com.example.androidproject.domain.ItemsInteractor
+import com.example.androidproject.domain.items.ItemsInteractor
 
 
 class ItemsViewFactory(

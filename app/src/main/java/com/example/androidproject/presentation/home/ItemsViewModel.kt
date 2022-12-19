@@ -1,10 +1,11 @@
-package com.example.androidproject
+package com.example.androidproject.presentation.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.androidproject.domain.ItemsInteractor
-import com.example.androidproject.model.ItemsModel
+import com.example.androidproject.R
+import com.example.androidproject.domain.items.ItemsInteractor
+import com.example.androidproject.domain.model.ItemsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -30,7 +31,7 @@ class ItemsViewModel @Inject constructor(
 
 
     fun imageViewClicked(){
-        _msg.value =  R.string.imageView_clicked
+        _msg.value = R.string.imageView_clicked
     }
 
     fun elementClicked(name: String, date: String, imageView: Int){

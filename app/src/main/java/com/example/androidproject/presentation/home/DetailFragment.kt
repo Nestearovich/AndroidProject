@@ -1,4 +1,4 @@
-package com.example.androidproject.presentation.view
+package com.example.androidproject.presentation.home
 
 
 import android.os.Bundle
@@ -8,19 +8,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import com.example.androidproject.utils.BundleConstant.IMAGE
 import com.example.androidproject.R
+import com.example.androidproject.databinding.FragmentDetailBinding
+import com.example.androidproject.databinding.FragmentHomeBinding
+import com.example.androidproject.presentation.auths.LoginFragment
 import com.example.androidproject.utils.BundleConstant.DATE
 import com.example.androidproject.utils.BundleConstant.NAME
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
+
+
+    private var _viewBinding: FragmentDetailBinding? = null
+    private val viewBinding get() = _viewBinding !!
+
+    private val viewModel: DetailsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+    ): View {
+        _viewBinding = FragmentDetailBinding.inflate(inflater, container, false)
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,5 +55,10 @@ class DetailFragment : Fragment() {
             detailsImage.setBackgroundResource(image)
         }
 
+        viewBinding.nav.observe(viewLifecycleOwner){
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.activity_container,LoginFragment())
+                .commit()
+        }
     }
 }

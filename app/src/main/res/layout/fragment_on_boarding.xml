@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.androidproject.presentation.view.OnBoardingViewModel" />
+            type="com.example.androidproject.presentation.auths.OnBoardingViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/holo_orange_light"
-        tools:context=".presentation.view.OnBoardingFragment">
+        tools:context=".presentation.auths.OnBoardingFragment">
 
 
         <TextView

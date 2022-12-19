@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidproject.presentation.Listner.ItemsListener
 import com.example.androidproject.R
-import com.example.androidproject.model.ItemsModel
+import com.example.androidproject.domain.model.ItemsModel
 
 class ItemsViewHolder(
     private val view: View,

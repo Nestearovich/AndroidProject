@@ -1,4 +1,4 @@
-package com.example.androidproject.model
+package com.example.androidproject.domain.model
 
 class ItemsModel(
     val image : Int,
