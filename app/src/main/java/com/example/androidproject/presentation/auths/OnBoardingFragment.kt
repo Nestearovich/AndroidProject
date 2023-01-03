@@ -6,19 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentOnBoardingBinding
 import com.example.androidproject.presentation.home.ItemsFragment
 import com.example.androidproject.utils.Navigation
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class OnBoardingFragment : Fragment(),OnBoardinView {
 
 
-class OnBoardingFragment : Fragment() {
 
-
-    private val viewModel: OnBoardingViewModel by viewModels()
 
     private var _viewBinding: FragmentOnBoardingBinding? = null
     private val viewBinding : FragmentOnBoardingBinding get() = _viewBinding!!
 
+    @Inject
+    lateinit var onBoardingPresenter: OnBoardingPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,17 +36,17 @@ class OnBoardingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       viewBinding.viewModel = viewModel
-        viewBinding.lifecycleOwner = viewLifecycleOwner
+        onBoardingPresenter.setView(this)
 
-
-      
-
-        viewModel.nav.observe(viewLifecycleOwner) {
-            if (it != null) {
-                Navigation.fmReplace(parentFragmentManager, ItemsFragment(), false)
-                viewModel.finishPerformed()
-            }
+        viewBinding.btn1.setOnClickListener {
+            onBoardingPresenter.goToItemsFragment()
         }
+
+
+            }
+
+    override fun goToItemsFragment() {
+        Navigation.fmReplace(parentFragmentManager, ItemsFragment(), false)
     }
 }
+

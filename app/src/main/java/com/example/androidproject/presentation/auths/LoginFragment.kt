@@ -10,18 +10,19 @@ import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentLoginBinding
 import com.example.androidproject.presentation.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
-
-    private val viewModel: LoginViewModel by viewModels()
+class LoginFragment : Fragment(), LoginView {
 
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
 
+    @Inject
+    lateinit var loginPresenter: LoginPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,18 +31,27 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
 
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        loginPresenter.setView(this)
 
         binding.button.setOnClickListener {
-            viewModel.loginUser(
+            loginPresenter.loginUser(
                 binding.edit1.text.toString(),
-            binding.edit2.text.toString()
+                binding.edit2.text.toString()
             )
         }
 
-        viewModel.nav.observe(viewLifecycleOwner){
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.activity_container, HomeFragment())
-                .commit()
-        }
+    }
+
+    override fun userLoggedIn() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.activity_container, HomeFragment())
+            .commit()
     }
 }
+
