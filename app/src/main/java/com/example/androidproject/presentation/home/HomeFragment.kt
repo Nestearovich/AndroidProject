@@ -46,11 +46,8 @@ class HomeFragment : Fragment() {
 
         viewModel.showUserData()
 
-        binding.button2.setOnClickListener {
-            replaceGraph(R.navigation.main_graph)
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.activity_container,OnBoardingFragment())
-//                .commit()
+        binding.btnGoToOnBording.setOnClickListener {
+          viewModel.goToOnBoarding()
         }
 
         viewModel.nav.observe(viewLifecycleOwner){
