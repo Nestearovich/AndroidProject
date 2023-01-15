@@ -24,7 +24,6 @@ abstract class DataModule {
         itemsRepositoryImpl: ItemsRepositoryImpl
     ): ItemsRepository
 
-
     @Binds
     abstract fun bindAuthRepository(
         authRepositoryImpl: AuthRepositoryImpl

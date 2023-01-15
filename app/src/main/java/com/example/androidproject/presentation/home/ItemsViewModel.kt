@@ -23,12 +23,10 @@ class ItemsViewModel @Inject constructor(
     private val _bundle = MutableLiveData<NavigateWithBundle?>()
     val bundle : LiveData<NavigateWithBundle?> = _bundle
 
-
     fun getData() {
         val listItems = itemsInteractor.getData()
         _items.value = listItems
     }
-
 
     fun imageViewClicked(){
         _msg.value = R.string.imageView_clicked
@@ -37,22 +35,20 @@ class ItemsViewModel @Inject constructor(
     fun elementClicked(name: String, date: String, imageView: Int){
         _bundle.value = NavigateWithBundle(
             image = imageView,
-            name=name,
-            date=date)
-
-
+            name = name,
+            date = date,
+        destination = R.id.action_itemsFragment_to_detailFragment)
     }
 
     fun userNavigated(){
         _bundle.value = null
     }
-
 }
-
 
 
 data class NavigateWithBundle(
     val image: Int,
     val name: String,
-    val date: String
+    val date: String,
+    val destination: Int
 )

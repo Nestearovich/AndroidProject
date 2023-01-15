@@ -1,13 +1,12 @@
 package com.example.androidproject.utils.coroutines
 
 import android.util.Log
-import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class CoroutinesEx {
+class CoroutinesExample {
 
     fun testCoroutinesJoin(){
         CoroutineScope(Dispatchers.IO).launch {
@@ -21,7 +20,7 @@ class CoroutinesEx {
             Log.w("finish","finished")
         }
     }
-    fun testCoroutinesCancek(){
+    fun testCoroutinesCancel(){
         CoroutineScope(Dispatchers.IO).launch {
             val job = launch {
                 for (i in 1..5){

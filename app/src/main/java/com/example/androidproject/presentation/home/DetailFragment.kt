@@ -12,10 +12,9 @@ import androidx.fragment.app.viewModels
 import com.example.androidproject.utils.BundleConstant.IMAGE
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentDetailBinding
-import com.example.androidproject.databinding.FragmentHomeBinding
-import com.example.androidproject.presentation.auths.LoginFragment
 import com.example.androidproject.utils.BundleConstant.DATE
 import com.example.androidproject.utils.BundleConstant.NAME
+import com.example.androidproject.utils.NavHelper.replaceGraph
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +22,7 @@ class DetailFragment : Fragment() {
 
 
     private var _viewBinding: FragmentDetailBinding? = null
-    private val viewBinding get() = _viewBinding !!
+    private val viewBinding get() = _viewBinding!!
 
     private val viewModel: DetailsViewModel by viewModels()
 
@@ -38,27 +37,27 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val detailsName = view.findViewById<TextView>(R.id.textView3)
-        val detailsDate = view.findViewById<TextView>(R.id.textView4)
-        val detailsImage = view.findViewById<ImageView>(R.id.imageView)
-
 
         val bundle = arguments
-        bundle?.let{ safeBundle ->
+        bundle?.let { safeBundle ->
             val name = bundle.getString(NAME)
             val date = bundle.getString(DATE)
             val image = bundle.getInt(IMAGE)
 
 
-            detailsName.text = name
-            detailsDate.text = date
-            detailsImage.setBackgroundResource(image)
+            viewBinding.textView3.text = name
+            viewBinding.textView4.text = date
+            viewBinding.imageView.setBackgroundResource(image)
         }
 
-        viewModel.nav.observe(viewLifecycleOwner){
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.activity_container,LoginFragment())
-                .commit()
+        viewBinding.btnLogout.setOnClickListener {
+            viewModel.logoutUser()
+        }
+
+        viewModel.nav.observe(viewLifecycleOwner) {
+            if (it != null) {
+                replaceGraph(it)
+            }
         }
     }
 }
