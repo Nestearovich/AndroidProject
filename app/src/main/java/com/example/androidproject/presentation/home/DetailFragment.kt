@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.androidproject.utils.BundleConstant.IMAGE
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentDetailBinding
@@ -40,9 +41,9 @@ class DetailFragment : Fragment() {
 
         val bundle = arguments
         bundle?.let { safeBundle ->
-            val name = bundle.getString(NAME)
-            val date = bundle.getString(DATE)
-            val image = bundle.getInt(IMAGE)
+            val name = safeBundle.getString(NAME)
+            val date = safeBundle.getString(DATE)
+            val image = safeBundle.getInt(IMAGE)
 
 
             viewBinding.textView3.text = name
@@ -56,7 +57,10 @@ class DetailFragment : Fragment() {
 
         viewModel.nav.observe(viewLifecycleOwner) {
             if (it != null) {
-                replaceGraph(it)
+                val navGraph = findNavController().navInflater.inflate(it)
+
+                navGraph.startDestination = R.id.loginFragment
+                findNavController().graph = navGraph
             }
         }
     }

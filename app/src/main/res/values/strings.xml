@@ -10,4 +10,6 @@
     <string name="click">Click</string>
     <string name="hello">Hello</string>
     <string name="go_to_the_onbording">go to the onbording</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="items_fragment">Items Fragment</string>
 </resources>
