@@ -20,7 +20,7 @@ class ItemsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_fruit,parent,false)
-        return ItemsViewHolder(view,itemsListener)
+        return ItemsViewHolder(viewBinding = ,itemsListener)
     }
 
     override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {

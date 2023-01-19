@@ -1,86 +1,30 @@
 package com.example.androidproject.data.authitems
 
 import com.example.androidproject.R
+import com.example.androidproject.data.ApiServise
 import com.example.androidproject.domain.items.ItemsRepository
 import com.example.androidproject.domain.model.ItemsModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class ItemsRepositoryImpl @Inject constructor(): ItemsRepository {
+class ItemsRepositoryImpl @Inject constructor(
+    private val apiServise: ApiServise
+): ItemsRepository {
 
-    override fun getData():List<ItemsModel>{
-        val listItems = listOf<ItemsModel>(
-            ItemsModel(
-                R.drawable.frut,
-                "ananas",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "ananas",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.icon,
-                "vergel",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "dante",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.icon,
-                "sleep",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "cry",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "rip",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "spirit",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "death",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "ananas",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "ananas",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "ananas",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "ananas",
-                "13.12.1202"
-            ),
-            ItemsModel(
-                R.drawable.spd,
-                "ananas",
-                "13.12.1202"
-            ),
-        )
-        return listItems
+
+
+    override suspend fun getData():List<ItemsModel>{
+        return  withContext(Dispatchers.IO) {
+            val response = apiServise.getData()
+            return response.body()?sampleList!!.let{
+            it.map {
+                ItemsModel(it.description, it.imageUrl)
+            }
+        } ?: kotlin.run {
+            emptyList()
+        }
+        }
     }
 }

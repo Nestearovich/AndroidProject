@@ -53,11 +53,8 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         binding.bottomNavigation.setupWithNavController(navController)
 
 
-        val btnav = AppBarConfiguration(
-            setOf(R.id.onBoardingFragment, R.id.itemsFragment)
-        )
 
-        NavigationUI.setupActionBarWithNavController(this, navController ,  btnav)
+        NavigationUI.setupActionBarWithNavController(this, navController )
 
         viewModel.nav.observe(this) {
             navController.graph = getNavGraph()

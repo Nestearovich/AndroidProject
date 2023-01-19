@@ -1,9 +1,9 @@
 package com.example.androidproject.presentation.Listner
 
-import android.widget.ImageView
+import java.io.FileDescriptor
 
 interface ItemsListener {
     fun onClick()
 
-    fun onElementSelected(name: String, date: String, imageView:Int)
+    fun onElementSelected(descriptor: String, image: String)
 }

@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidproject.utils.BundleConstant.IMAGE
 import com.example.androidproject.R
 import com.example.androidproject.presentation.Listner.ItemsListener
 import com.example.androidproject.presentation.adapter.ItemsAdapter
+import com.example.androidproject.utils.BundleConstant
 import com.example.androidproject.utils.BundleConstant.DATE
 import com.example.androidproject.utils.BundleConstant.NAME
 import com.example.androidproject.utils.NavHelper.navigateWithBundle
@@ -36,8 +36,6 @@ class ItemsFragment : Fragment(), ItemsListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         itemsAdapter = ItemsAdapter(this)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
@@ -54,34 +52,33 @@ class ItemsFragment : Fragment(), ItemsListener {
         viewModel.msg.observe(viewLifecycleOwner) { msg ->
             Toast.makeText(context, getString(msg), Toast.LENGTH_SHORT).show()
         }
+        viewModel.error.observe(viewLifecycleOwner){
+            Toast.makeText(context, getString(it), Toast.LENGTH_SHORT).show()
+        }
 
         viewModel.bundle.observe(viewLifecycleOwner) { navBundle ->
             if (navBundle != null) {
                 val bundle = Bundle()
-                bundle.putString(NAME, navBundle.name)
-                bundle.putString(DATE, navBundle.date)
-                bundle.putInt(IMAGE, navBundle.image)
+                bundle.putString("description",it.description)
+                bundle.putString(BundleConstant, IMAGE,it.image)
 
 
                 Toast.makeText(context, "called", Toast.LENGTH_SHORT).show()
-
                 navigateWithBundle(
                     R.id.action_itemsFragment_to_detailFragment,
                     bundle
                 )
-
 
                 viewModel.userNavigated()
             }
 
         }
     }
-
     override fun onClick() {
         viewModel.imageViewClicked()
     }
-
-    override fun onElementSelected(name: String, date: String, imageView: Int) {
-        viewModel.elementClicked(name, date, imageView)
+    override fun onElementSelected(descriptor: String, image: String) {
+        viewModel.elementClicked(descriptor,image)
     }
+
 }

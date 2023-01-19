@@ -2,6 +2,7 @@ package com.example.androidproject.di
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import com.example.androidproject.data.ApiServise
 import com.example.androidproject.data.authitems.AuthRepositoryImpl
 import com.example.androidproject.data.authitems.ItemsRepositoryImpl
 import com.example.androidproject.data.sharedprefences.SharedPreferencesHelper
@@ -13,6 +14,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 
 @Module
@@ -31,6 +35,7 @@ abstract class DataModule {
 
     companion object{
         private const val SP_KEY = "SP_KEY"
+        private const val BASE_URL =  " https://api.jsonserve.com"
 
         @Provides
         fun provideSharedPrefences(
@@ -39,6 +44,18 @@ abstract class DataModule {
             return SharedPreferencesHelper(
                 context.getSharedPreferences(SP_KEY,MODE_PRIVATE)
             )
+        }
+        @Provides
+        fun provideApiService(retrofit: Retrofit): ApiServise {
+            return retrofit.create(ApiServise::class.java)
+        }
+
+        @Provides
+        fun provideRetrofitInstance(): Retrofit {
+            return Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
         }
     }
 }

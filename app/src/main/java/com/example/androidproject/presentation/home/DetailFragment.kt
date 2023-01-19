@@ -1,6 +1,7 @@
 package com.example.androidproject.presentation.home
 
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.example.androidproject.databinding.FragmentDetailBinding
 import com.example.androidproject.utils.BundleConstant.DATE
 import com.example.androidproject.utils.BundleConstant.NAME
 import com.example.androidproject.utils.NavHelper.replaceGraph
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,14 +43,13 @@ class DetailFragment : Fragment() {
 
         val bundle = arguments
         bundle?.let { safeBundle ->
-            val name = safeBundle.getString(NAME)
-            val date = safeBundle.getString(DATE)
-            val image = safeBundle.getInt(IMAGE)
+            val description = safeBundle.getString("description")
+            val image = safeBundle.getString(IMAGE)
 
 
-            viewBinding.textView3.text = name
-            viewBinding.textView4.text = date
-            viewBinding.imageView.setBackgroundResource(image)
+            viewBinding.textView3.text = description
+            Picasso.get().load(Uri.parse(image)).into(viewBinding.imageView)
+
         }
 
         viewBinding.btnLogout.setOnClickListener {
