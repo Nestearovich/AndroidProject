@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.androidproject.utils.BundleConstant.IMAGE
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentDetailBinding
-import com.example.androidproject.utils.BundleConstant.DATE
 import com.example.androidproject.utils.BundleConstant.NAME
 import com.example.androidproject.utils.NavHelper.replaceGraph
 import com.squareup.picasso.Picasso
@@ -22,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
-
 
     private var _viewBinding: FragmentDetailBinding? = null
     private val viewBinding get() = _viewBinding!!
@@ -36,20 +34,16 @@ class DetailFragment : Fragment() {
         _viewBinding = FragmentDetailBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val bundle = arguments
         bundle?.let { safeBundle ->
             val description = safeBundle.getString("description")
             val image = safeBundle.getString(IMAGE)
 
-
             viewBinding.textView3.text = description
             Picasso.get().load(Uri.parse(image)).into(viewBinding.imageView)
-
         }
 
         viewBinding.btnLogout.setOnClickListener {

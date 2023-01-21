@@ -31,17 +31,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        lifecycleScope.launch {
-//           val job = launch {
-//                for (i in 1..5){
-//                    Log.w("called","$i")
-//                    delay(400)
-//                }
-//            }
-//            Log.w("start","started")
-//            Log.w("finish","finished")
-//        }
-
         CoroutinesExample().testCoroutinesCancel()
 
         viewModel.showUserData()

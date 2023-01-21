@@ -12,15 +12,15 @@ class ItemsAdapter(
 ): RecyclerView.Adapter<ItemsViewHolder>() {
 
     private var listItems = mutableListOf<ItemsModel>()
-
-
     fun submitList(list:List<ItemsModel>){
+        this.listItems.clear()
         this.listItems = list.toMutableList()
+        this.notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_fruit,parent,false)
-        return ItemsViewHolder(viewBinding = ,itemsListener)
+        return ItemsViewHolder(view,itemsListener)
     }
 
     override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {

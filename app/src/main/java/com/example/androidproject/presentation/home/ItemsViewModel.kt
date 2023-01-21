@@ -38,27 +38,24 @@ class ItemsViewModel @Inject constructor(
                 _error.value = e.message.toString()
             }
         }
-
     }
 
     fun imageViewClicked() {
         _msg.value = R.string.imageView_clicked
     }
 
-    fun elementClicked(descrption: String, image: String) {
+    fun elementClicked(description: String, image: String) {
         _bundle.value = NavigateWithBundle(
-            descrption , image,  R.id.action_itemsFragment_to_detailFragment
+            description , image,  R.id.action_itemsFragment_to_detailFragment
         )
     }
-
     fun userNavigated() {
         _bundle.value = null
     }
 }
 
-
 data class NavigateWithBundle(
     val image: String,
-    val descrption: String,
-    val destination: Int
+    val description: String,
+    val destinationId: Int
 )

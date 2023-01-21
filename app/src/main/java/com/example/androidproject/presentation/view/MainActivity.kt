@@ -2,8 +2,10 @@ package com.example.androidproject.presentation.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBar
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
@@ -13,6 +15,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.androidproject.R
 import com.example.androidproject.databinding.ActivityMainBinding
+
 import com.example.androidproject.presentation.auths.LoginFragment
 import com.example.androidproject.presentation.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,46 +29,33 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     private val viewModel: MainViewModel by viewModels()
 
     private lateinit var navController: NavController
-
     private lateinit var  navHostFragment:NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
+        actionBar?.setDisplayHomeAsUpEnabled(false)
 
         viewModel.checkUserExists()
-
 
          navHostFragment = supportFragmentManager.findFragmentById(
             R.id.fragmentContainerView
         ) as NavHostFragment
 
-
         navController = navHostFragment.navController
-
-
-        navController.addOnDestinationChangedListener(this)
-
-
-        binding.bottomNavigation.setupWithNavController(navController)
-
-
-
-        NavigationUI.setupActionBarWithNavController(this, navController )
 
         viewModel.nav.observe(this) {
             navController.graph = getNavGraph()
-
-           // navController.setGraph(it)
         }
+
+        navController.addOnDestinationChangedListener(this)
+
+        binding.bottomNavigation.setupWithNavController(navController)
 
         viewModel.visibility.observe(this){
             binding.bottomNavigation.visibility = it
         }
-
     }
 
     override fun onDestinationChanged(
@@ -76,14 +66,15 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         viewModel.destinationChanged(destination)
     }
     fun getNavGraph():NavGraph{
-
             val navGraph = navHostFragment.navController.navInflater.inflate(
                 R.navigation.auth_graph
             )
-            val random = (1..2).random()
+            val random = (1..4).random()
             if (random == 1){
+                Log.w("random 1", random.toString())
                 navGraph.startDestination = R.id.loginFragment
             }else{
+                Log.w("random 2", random.toString())
                 navGraph.startDestination = R.id.homeFragment
             }
         return navGraph

@@ -13,15 +13,17 @@ import com.example.androidproject.domain.model.ItemsModel
 import com.squareup.picasso.Picasso
 
 class ItemsViewHolder(
-    private val viewBinding: ItemFruitBinding ,
+    private val view:View,
     private val itemsListener: ItemsListener
-):RecyclerView.ViewHolder(viewBinding.root) {
+):RecyclerView.ViewHolder(view) {
 
    fun bind(itemsModel: ItemsModel){
+       val name = view.findViewById<TextView>(R.id.tv_name)
+       val imageView = view.findViewById<ImageView>(R.id.image)
 
-       viewBinding.textView.text = itemsModel.descripstion
+       name.text = itemsModel.descripstion
 
-       Picasso.get().load(Uri.parse(itemsModel.image)).into(viewBinding.ivImage)
+       Picasso.get().load(Uri.parse(itemsModel.image)).into(imageView)
 
        imageView.setOnClickListener{
            itemsListener.onClick()

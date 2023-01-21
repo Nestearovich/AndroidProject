@@ -17,7 +17,6 @@ class HomeViewModel @Inject constructor(
     private val authInteractor: AuthInteractor
 ): ViewModel(){
 
-
     private val _userCreds = MutableLiveData<UserModel>()
     val userCreds: LiveData<UserModel> = _userCreds
 
@@ -29,7 +28,6 @@ class HomeViewModel @Inject constructor(
             _userCreds.value = authInteractor.getUserCreds()
         }
     }
-
     fun goToOnBoarding(){
         _nav.value = R.navigation.main_graph
     }

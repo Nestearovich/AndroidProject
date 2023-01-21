@@ -10,16 +10,15 @@ import androidx.navigation.NavOptions
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentOnBoardingBinding
 import com.example.androidproject.utils.NavHelper.navigateWithDeletedBackStack
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class OnBoardingFragment : Fragment() {
-
 
     private val viewModel: OnBoardingViewModel by viewModels()
 
     private var _viewBinding: FragmentOnBoardingBinding? = null
     private val viewBinding : FragmentOnBoardingBinding get() = _viewBinding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,17 +36,12 @@ class OnBoardingFragment : Fragment() {
         viewBinding.lifecycleOwner = viewLifecycleOwner
 
 
-      
-
         viewModel.nav.observe(viewLifecycleOwner) {
             if (it != null) {
-                val navOptions = NavOptions.Builder()
-                navOptions.setPopUpTo(R.id.onBoardingFragment, true)//указываем фрагмент кот хотим удалить из бакстека
                 navigateWithDeletedBackStack(
                     it.destinationId,
                     it.removeFragmentId
                 )
-
                 viewModel.finishPerformed()
             }
         }

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentLoginBinding
 import com.example.androidproject.utils.NavHelper.navigate
+import com.example.androidproject.utils.NavHelper.navigateWithDeletedBackStack
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -30,19 +31,25 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
 
-
-        binding.button.setOnClickListener {
-            viewModel.loginUser(
-                binding.edit1.text.toString(),
-                binding.edit2.text.toString()
-            )
-        }
-
-        viewModel.nav.observe(viewLifecycleOwner) {
-            if (it != null) {
-                navigate(R.id.action_loginFragment_to_homeFragment)
-                viewModel.userNavigated()
-            }
-        }
     }
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            binding.btnLog.setOnClickListener {
+                viewModel.loginUser(
+                    binding.edit1.text.toString(),
+                    binding.edit2.text.toString()
+                )
+            }
+            viewModel.nav.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    navigateWithDeletedBackStack(
+                        it.destinationId,
+                        it.removeFragment
+                    )
+                    viewModel.userNavigated()
+                }
+            }
+
+        }
+
 }

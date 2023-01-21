@@ -17,8 +17,8 @@ class LoginViewModel @Inject constructor(
     private val authInteractor: AuthInteractor
 ): ViewModel() {
 
-    private val _nav = MutableLiveData<Int?>()
-    val nav: LiveData<Int?> = _nav
+    private val _nav = MutableLiveData<NavToHome?>()
+    val nav: LiveData<NavToHome?> = _nav
 
 
     fun loginUser(userName: String, userPassword: String) {
@@ -27,14 +27,18 @@ class LoginViewModel @Inject constructor(
             Log.w("exceptionHandler" , exseption.toString())
         }
 
-        viewModelScope.launch(CoroutineName("with exception") + Dispatchers.Main + coroutineExceptionHandler)  {
+        viewModelScope.launch(CoroutineName("with exception") + Dispatchers.Main + coroutineExceptionHandler) {
             try {
-                authInteractor.loginUser(userName, userPassword)
-                _nav.value = R.id.action_loginFragment_to_homeFragment
-            }catch (e: Exception){
+                launch {
+                    authInteractor.loginUser(userName, userPassword)
+                    _nav.value = NavToHome(
+                        R.id.action_loginFragment_to_homeFragment,
+                        R.id.loginFragment
+                    )
+                }
+            } catch (e: Exception) {
                 Log.w("exception", "loginUser FAILED")
             }
-
         }
     }
 
@@ -42,3 +46,8 @@ class LoginViewModel @Inject constructor(
         _nav.value = null
     }
 }
+
+data class NavToHome (
+    val destinationId: Int,
+    val removeFragment: Int
+        )

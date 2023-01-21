@@ -1,6 +1,6 @@
-package com.example.androidproject.data
+package com.example.androidproject.data.service
 
-import com.example.androidproject.data.model.ItemsResponse
+import com.example.androidproject.di.model.ItemsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 
