@@ -20,7 +20,7 @@ class ItemsViewHolder(
    fun bind(itemsModel: ItemsModel){
        val name = view.findViewById<TextView>(R.id.tv_name)
        val imageView = view.findViewById<ImageView>(R.id.image)
-
+val deleteView = view.findViewById<ImageView>(R.id.idelete)
        name.text = itemsModel.descripstion
 
        Picasso.get().load(Uri.parse(itemsModel.image)).into(imageView)
@@ -33,6 +33,9 @@ class ItemsViewHolder(
            itemsListener.onElementSelected(
                itemsModel.descripstion,
            itemsModel.image)
+       }
+       deleteView.setOnClickListener {
+           itemsListener.onDeleteClicked(itemsModel.descripstion)
        }
     }
 }

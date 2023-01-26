@@ -5,5 +5,7 @@ import java.io.FileDescriptor
 interface ItemsListener {
     fun onClick()
 
-    fun onElementSelected(descriptor: String, image: String)
+    fun onElementSelected(description: String, image: String)
+
+    fun onDeleteClicked(description:String)
 }
