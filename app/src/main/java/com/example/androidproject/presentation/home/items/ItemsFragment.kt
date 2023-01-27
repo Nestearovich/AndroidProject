@@ -1,4 +1,4 @@
-package com.example.androidproject.presentation.home
+package com.example.androidproject.presentation.home.items
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,9 +13,8 @@ import com.example.androidproject.utils.BundleConstant.IMAGE
 import com.example.androidproject.R
 import com.example.androidproject.presentation.Listner.ItemsListener
 import com.example.androidproject.presentation.adapter.ItemsAdapter
-import com.example.androidproject.utils.BundleConstant
+import com.example.androidproject.presentation.home.ItemsViewModel
 import com.example.androidproject.utils.BundleConstant.DESCRIPTION
-import com.example.androidproject.utils.BundleConstant.NAME
 import com.example.androidproject.utils.NavHelper.navigateWithBundle
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -82,4 +81,7 @@ class ItemsFragment : Fragment(), ItemsListener {
        viewModel.deleteItem(description)
     }
 
+    override fun onFavClicked(description: String) {
+        viewModel.onFavClicked(description)
+    }
 }

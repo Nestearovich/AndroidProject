@@ -1,4 +1,4 @@
-package com.example.androidproject.presentation.home
+package com.example.androidproject.presentation.home.items
 
 
 import android.net.Uri
@@ -7,15 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.androidproject.utils.BundleConstant.IMAGE
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentDetailBinding
-import com.example.androidproject.utils.BundleConstant.NAME
-import com.example.androidproject.utils.NavHelper.replaceGraph
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,5 +1,6 @@
-package com.example.androidproject.presentation.home
+package com.example.androidproject.presentation.home.items
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,8 +22,12 @@ class SearchViewModel @Inject constructor(
 
     fun findItem(searchText:String){
         viewModelScope.launch {
-           val foundItems =itemsInteractor.findItem(searchText)
-            //_items.value = foundItems
+            try {
+                val foundItems =itemsInteractor.findItem(searchText)
+                _items.value = foundItems
+            }catch (e:java.lang.Exception){
+                Log.w("exception",e.toString())
+            }
         }
     }
 }

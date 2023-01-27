@@ -1,5 +1,6 @@
 package com.example.androidproject.domain.items
 
+import com.example.androidproject.domain.model.FavoritesModel
 import com.example.androidproject.domain.model.ItemsModel
 import javax.inject.Inject
 
@@ -19,7 +20,16 @@ class ItemsInteractor @Inject constructor(
         itemsRepository.deleteItemByDescription(description)
     }
 
-    suspend fun findItem(searchText: String){
+    suspend fun findItem(searchText: String):ItemsModel{
         return itemsRepository.findItemByDescription(searchText)
+    }
+
+    suspend fun onFavClicked(description: String){
+        val foundItem =  itemsRepository.findItemByDescription(description)
+        itemsRepository.favClicked(foundItem)
+    }
+
+    suspend fun getFavorites(): List<FavoritesModel>{
+        return itemsRepository.getFavorites()
     }
 }

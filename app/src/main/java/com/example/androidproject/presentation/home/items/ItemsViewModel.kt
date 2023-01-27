@@ -58,6 +58,12 @@ class ItemsViewModel @Inject constructor(
         viewModelScope.launch {  itemsInteractor.deleteItemByDescription(description)}
 
     }
+
+    fun onFavClicked(description: String){
+        viewModelScope.launch {
+            itemsInteractor.onFavClicked(description)
+        }
+    }
 }
 
 data class NavigateWithBundle(

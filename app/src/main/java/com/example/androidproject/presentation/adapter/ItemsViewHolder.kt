@@ -7,8 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidproject.presentation.Listner.ItemsListener
 import com.example.androidproject.R
-import com.example.androidproject.databinding.FragmentLoginBinding
-import com.example.androidproject.databinding.ItemFruitBinding
 import com.example.androidproject.domain.model.ItemsModel
 import com.squareup.picasso.Picasso
 
@@ -21,6 +19,7 @@ class ItemsViewHolder(
        val name = view.findViewById<TextView>(R.id.tv_name)
        val imageView = view.findViewById<ImageView>(R.id.image)
 val deleteView = view.findViewById<ImageView>(R.id.idelete)
+       val fav = view.findViewById<ImageView>(R.id.btnFav)
        name.text = itemsModel.descripstion
 
        Picasso.get().load(Uri.parse(itemsModel.image)).into(imageView)
@@ -36,6 +35,9 @@ val deleteView = view.findViewById<ImageView>(R.id.idelete)
        }
        deleteView.setOnClickListener {
            itemsListener.onDeleteClicked(itemsModel.descripstion)
+       }
+       fav.setOnClickListener {
+
        }
     }
 }
