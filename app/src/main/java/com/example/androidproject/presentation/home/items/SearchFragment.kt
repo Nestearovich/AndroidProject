@@ -1,5 +1,6 @@
 package com.example.androidproject.presentation.home.items
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import com.example.androidproject.databinding.FragmentSearchBinding
+import com.example.androidproject.presentation.home.items.service.MusicPlayer
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,12 +47,21 @@ class SearchFragment : Fragment() {
             }
 
         })
-
         viewModel.items.observe(viewLifecycleOwner){
             viewBinding.description.text = it.descripstion
             Picasso.get().load(Uri.parse(it.image)).into(viewBinding.image)
         }
+
+        viewBinding.btnStart.setOnClickListener {
+            requireActivity().startService(Intent(requireContext(),MusicPlayer::class.java))
+        }
+
+
+        viewBinding.btnStop.setOnClickListener {
+            requireActivity().stopService(Intent(requireContext(),MusicPlayer::class.java))
+        }
     }
+
 }
 
 

@@ -8,6 +8,9 @@ import com.example.androidproject.R
 import com.example.androidproject.domain.items.ItemsInteractor
 import com.example.androidproject.domain.model.ItemsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,8 +19,12 @@ class ItemsViewModel @Inject constructor(
     private val itemsInteractor: ItemsInteractor,
 ) : ViewModel() {
 
-    private val _items = MutableLiveData<List<ItemsModel>>()
-    val items: LiveData<List<ItemsModel>> = _items
+//    private val _items = MutableLiveData<List<ItemsModel>>()
+//    val items: LiveData<List<ItemsModel>> = _items
+
+    val items = flow <Flow<List<ItemsModel>>> {emit(itemsInteractor.showData())
+    }
+
 
     private val _msg = MutableLiveData<Int>()
     val msg: LiveData<Int> = _msg
@@ -33,12 +40,23 @@ class ItemsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 itemsInteractor.getData()
-                val listItems = itemsInteractor.showData()
-               _items.value = listItems
-            } catch (e: java.lang.Exception) {
+            }catch (e:Exception){
                 _error.value = e.message.toString()
             }
+
         }
+
+//        viewModelScope.launch {
+//            try {
+//                val listItems = itemsInteractor.showData()
+//                listItems.collect{
+//                    _items.value = it
+//                }
+//
+//            } catch (e: java.lang.Exception) {
+//                _error.value = e.message.toString()
+//            }
+//        }
     }
 
     fun imageViewClicked() {

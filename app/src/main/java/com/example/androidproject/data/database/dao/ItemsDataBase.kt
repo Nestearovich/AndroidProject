@@ -32,7 +32,7 @@ abstract class ItemsDataBase: RoomDatabase () {
         }
         val  MIGRATION_2_TO_3 = object :Migration(2,3){
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE ItemsEntity RENAME COLUMN imageUrl2 TO imageUrl3")
+                database.execSQL("ALTER TABLE ItemsEntity RENAME COLUMN imageUrl TO imageUrl3")
             }
         }
     }

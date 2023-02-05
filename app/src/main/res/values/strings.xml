@@ -15,4 +15,6 @@
     <string name="searchfragment">SearchFragment</string>
     <string name="searchFragment">searchFragment</string>
     <string name="favorites">Favorites</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
 </resources>

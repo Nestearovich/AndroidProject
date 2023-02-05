@@ -10,6 +10,9 @@ import com.example.androidproject.domain.items.ItemsRepository
 import com.example.androidproject.domain.model.FavoritesModel
 import com.example.androidproject.domain.model.ItemsModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
@@ -23,30 +26,33 @@ class ItemsRepositoryImpl @Inject constructor(
 ): ItemsRepository {
 
     override suspend fun getData() {
-        return withContext(Dispatchers.IO) {
+         withContext(Dispatchers.IO) {
+             itemsDAO.doesItemsEntityExist().collect() {
+                 if (!it) {
+                     Log.w("getData", "data not exist")
+                     val response = apiServise.getData()
 
-            if (!itemsDAO.doesItemsEntityExist()) {
-                Log.w("getData","data not exist")
-                val response = apiServise.getData()
-
-                Log.w("data",response.body()?.sampleList.toString())
-                response.body()?.sampleList?.let {
-                    it.map {
-                        val itemsEntity =
-                            ItemsEntity(Random().nextInt(), it.description, it.imageUrl)
-                        itemsDAO.insertItemsEntity(itemsEntity)
-                    }
-                }
-            }
+                     Log.w("data", response.body()?.sampleList.toString())
+                     response.body()?.sampleList?.let {
+                         it.map {
+                             val itemsEntity =
+                                 ItemsEntity(Random().nextInt(), it.description, it.imageUrl)
+                             itemsDAO.insertItemsEntity(itemsEntity)
+                         }
+                     }
+                 }
+             }
         }
     }
 
-    override suspend fun showData(): List<ItemsModel> {
+    override suspend fun showData():Flow <List<ItemsModel>> {
         return withContext(Dispatchers.IO){
             val itemsEntity = itemsDAO.getItemsEntities()
-            itemsEntity.map{
-                ItemsModel(it.description,
-                    it.imageUrl)
+            itemsEntity.map{ itemsList ->
+                itemsList.map { item ->
+                    ItemsModel(
+                    item.description,
+                    item.imageUrl) }
             }
         }
     }

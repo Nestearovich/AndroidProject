@@ -27,6 +27,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <service android:name=".presentation.home.items.service.MusicPlayer"
+            android:enabled="true"
+            android:exported="true"/>
+
     </application>
 
 </manifest>
