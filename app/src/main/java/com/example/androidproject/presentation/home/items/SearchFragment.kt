@@ -2,12 +2,14 @@ package com.example.androidproject.presentation.home.items
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.example.androidproject.databinding.FragmentSearchBinding
 import com.example.androidproject.presentation.home.items.service.MusicPlayer
@@ -32,6 +34,7 @@ class SearchFragment : Fragment() {
         return viewBinding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,7 +56,7 @@ class SearchFragment : Fragment() {
         }
 
         viewBinding.btnStart.setOnClickListener {
-            requireActivity().startService(Intent(requireContext(),MusicPlayer::class.java))
+            requireActivity().startForegroundService(Intent(requireContext(),MusicPlayer::class.java))
         }
 
 

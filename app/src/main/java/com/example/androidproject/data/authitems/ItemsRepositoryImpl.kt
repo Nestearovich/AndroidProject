@@ -27,21 +27,19 @@ class ItemsRepositoryImpl @Inject constructor(
 
     override suspend fun getData() {
          withContext(Dispatchers.IO) {
-             itemsDAO.doesItemsEntityExist().collect() {
-                 if (!it) {
+                 val itemExists = itemsDAO.doesItemsEntityExist()
+                 if (!itemExists) {
                      Log.w("getData", "data not exist")
                      val response = apiServise.getData()
 
                      Log.w("data", response.body()?.sampleList.toString())
                      response.body()?.sampleList?.let {
                          it.map {
-                             val itemsEntity =
-                                 ItemsEntity(Random().nextInt(), it.description, it.imageUrl)
+                             val itemsEntity = ItemsEntity(Random().nextInt(), it.description, it.imageUrl)
                              itemsDAO.insertItemsEntity(itemsEntity)
                          }
                      }
                  }
-             }
         }
     }
 
@@ -74,7 +72,8 @@ class ItemsRepositoryImpl @Inject constructor(
     override suspend fun favClicked(itemsModel: ItemsModel) {
         return withContext(Dispatchers.IO){
             itemsDAO.insertFavoritesEntity(
-                FavoritesEntity(Random().nextInt(),
+                FavoritesEntity(
+                    Random().nextInt(),
                 itemsModel.descripstion,
                 itemsModel.image)
             )
@@ -91,5 +90,5 @@ class ItemsRepositoryImpl @Inject constructor(
             }
         }
     }
-
 }
+

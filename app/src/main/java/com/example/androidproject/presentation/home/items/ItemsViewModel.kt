@@ -22,9 +22,13 @@ class ItemsViewModel @Inject constructor(
 //    private val _items = MutableLiveData<List<ItemsModel>>()
 //    val items: LiveData<List<ItemsModel>> = _items
 
-    val items = flow <Flow<List<ItemsModel>>> {emit(itemsInteractor.showData())
-    }
+    val items = flow <Flow<List<ItemsModel>>> {emit(itemsInteractor.showData()) }
 
+    val getData = flow { emit(itemsInteractor.getData()) }
+
+
+    private val _trigger = MutableLiveData<Flow<Unit>>()
+    val trigger = _trigger
 
     private val _msg = MutableLiveData<Int>()
     val msg: LiveData<Int> = _msg
@@ -36,28 +40,38 @@ class ItemsViewModel @Inject constructor(
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
-    fun getData() {
+    fun getData(){
         viewModelScope.launch {
-            try {
-                itemsInteractor.getData()
-            }catch (e:Exception){
-                _error.value = e.message.toString()
-            }
-
+            _trigger.value = flow { emit(itemsInteractor.getData()) }
         }
+    }
 
+    suspend fun getDataSimple(){
+        itemsInteractor.getData()
+    }
+
+//    fun getData() {
 //        viewModelScope.launch {
 //            try {
-//                val listItems = itemsInteractor.showData()
-//                listItems.collect{
-//                    _items.value = it
-//                }
-//
-//            } catch (e: java.lang.Exception) {
+//                itemsInteractor.getData()
+//            }catch (e:Exception){
 //                _error.value = e.message.toString()
 //            }
+//
 //        }
-    }
+//
+////        viewModelScope.launch {
+////            try {
+////                val listItems = itemsInteractor.showData()
+////                listItems.collect{
+////                    _items.value = it
+////                }
+////
+////            } catch (e: java.lang.Exception) {
+////                _error.value = e.message.toString()
+////            }
+////        }
+//    }
 
     fun imageViewClicked() {
         _msg.value = R.string.imageView_clicked

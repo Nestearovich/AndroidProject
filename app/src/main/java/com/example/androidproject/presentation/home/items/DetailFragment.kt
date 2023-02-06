@@ -50,7 +50,7 @@ class DetailFragment : Fragment() {
             if (it != null) {
                 val navGraph = findNavController().navInflater.inflate(it)
 
-                navGraph.startDestination = R.id.loginFragment
+                navGraph.setStartDestination(R.id.loginFragment)
                 findNavController().graph = navGraph
             }
         }
