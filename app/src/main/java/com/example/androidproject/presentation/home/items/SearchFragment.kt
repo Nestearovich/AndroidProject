@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
+import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentSearchBinding
 import com.example.androidproject.presentation.home.items.service.MusicPlayer
+import com.google.android.material.animation.AnimationUtils
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,7 +55,11 @@ class SearchFragment : Fragment() {
             Picasso.get().load(Uri.parse(it.image)).into(viewBinding.image)
         }
 
+
+
         viewBinding.btnStart.setOnClickListener {
+
+
             requireActivity().startService(Intent(requireContext(),MusicPlayer::class.java))
         }
 
@@ -60,6 +67,10 @@ class SearchFragment : Fragment() {
         viewBinding.btnStop.setOnClickListener {
             requireActivity().stopService(Intent(requireContext(),MusicPlayer::class.java))
         }
+        val btn = Button(context)
+        btn.background =  context?.getDrawable(R.drawable.ic)
+        btn.text = context?.getString(R.string.app_name)
+
     }
 
 }

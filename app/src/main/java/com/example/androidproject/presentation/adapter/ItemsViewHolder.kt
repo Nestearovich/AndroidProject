@@ -37,7 +37,7 @@ val deleteView = view.findViewById<ImageView>(R.id.idelete)
            itemsListener.onDeleteClicked(itemsModel.descripstion)
        }
        fav.setOnClickListener {
-
+           fav.isSelected = !it.isSelected
        }
     }
 }
