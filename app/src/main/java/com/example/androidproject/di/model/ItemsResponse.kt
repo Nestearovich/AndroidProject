@@ -7,7 +7,6 @@ data class ItemsResponse(
     @SerializedName("sample")
     val sampleList: List<Sample>
 )
-
 data class Sample(
     @SerializedName("description")
     val description:String,

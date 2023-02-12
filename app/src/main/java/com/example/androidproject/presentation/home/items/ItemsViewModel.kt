@@ -7,14 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.androidproject.R
 import com.example.androidproject.domain.items.ItemsInteractor
 import com.example.androidproject.domain.model.ItemsModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
+
 class ItemsViewModel @Inject constructor(
     private val itemsInteractor: ItemsInteractor,
 ) : ViewModel() {
@@ -25,6 +23,12 @@ class ItemsViewModel @Inject constructor(
     val items = flow <Flow<List<ItemsModel>>> {emit(itemsInteractor.showData())
     }
 
+    //Способ 1(фикс дубликатов)
+    val getData = flow { emit(itemsInteractor.getData()) }
+
+    //Способ 2
+    private val _trigger = MutableLiveData<Flow<Unit>>()
+    val trigger = _trigger
 
     private val _msg = MutableLiveData<Int>()
     val msg: LiveData<Int> = _msg
@@ -36,27 +40,17 @@ class ItemsViewModel @Inject constructor(
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
-    fun getData() {
+
+    //Способ 2
+    fun getData(){
         viewModelScope.launch {
-            try {
-                itemsInteractor.getData()
-            }catch (e:Exception){
-                _error.value = e.message.toString()
-            }
-
+            _trigger.value = flow { emit(itemsInteractor.getData()) }
         }
+    }
 
-//        viewModelScope.launch {
-//            try {
-//                val listItems = itemsInteractor.showData()
-//                listItems.collect{
-//                    _items.value = it
-//                }
-//
-//            } catch (e: java.lang.Exception) {
-//                _error.value = e.message.toString()
-//            }
-//        }
+    //Способ 3
+    suspend fun getDataSimple(){
+        itemsInteractor.getData()
     }
 
     fun imageViewClicked() {
@@ -77,9 +71,9 @@ class ItemsViewModel @Inject constructor(
 
     }
 
-    fun onFavClicked(description: String){
+    fun onFavClicked(description: String, isFavorite: Boolean){
         viewModelScope.launch {
-            itemsInteractor.onFavClicked(description)
+            itemsInteractor.onFavClicked(description,isFavorite)
         }
     }
 }

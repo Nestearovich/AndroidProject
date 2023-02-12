@@ -1,28 +1,26 @@
 package com.example.androidproject.presentation.home.items
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.androidproject.R
-import com.example.androidproject.databinding.FragmentDetailBinding
+import com.example.androidproject.App
 import com.example.androidproject.databinding.FragmentFavoritsBinding
-import com.example.androidproject.presentation.adapter.ItemsAdapter
 import com.example.androidproject.presentation.home.items.adapter.FavoritesAdapter
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.androidproject.utils.BaseFragment
 
-@AndroidEntryPoint
-class FavoritesFragment : Fragment() {
+
+class FavoritesFragment : BaseFragment() {
 
     private var _viewBinding: FragmentFavoritsBinding? = null
     private val viewBinding get() = _viewBinding!!
 
     private lateinit var favAdapter: FavoritesAdapter
 
-    private val viewModel: FavoritesViewModel by viewModels()
+    private val viewModel: FavoritesViewModel by viewModels{viewModelFactory}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +33,7 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (requireActivity().applicationContext as App).provideAppComponent().inject(this)
 
         favAdapter = FavoritesAdapter()
         viewBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext())

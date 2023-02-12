@@ -1,19 +1,15 @@
 package com.example.androidproject.presentation.home.items
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidproject.domain.items.ItemsInteractor
 import com.example.androidproject.domain.model.FavoritesModel
-import com.example.androidproject.domain.model.ItemsModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-@HiltViewModel
 class FavoritesViewModel @Inject constructor(
     private val itemsInteractor: ItemsInteractor
 ): ViewModel() {

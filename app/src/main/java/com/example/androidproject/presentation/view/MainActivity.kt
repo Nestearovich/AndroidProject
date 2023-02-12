@@ -1,32 +1,30 @@
 package com.example.androidproject.presentation.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.example.androidproject.App
 import com.example.androidproject.R
 import com.example.androidproject.databinding.ActivityMainBinding
+import javax.inject.Inject
 
-import com.example.androidproject.presentation.auths.LoginFragment
-import com.example.androidproject.presentation.home.HomeFragment
-import dagger.hilt.android.AndroidEntryPoint
-import kotlin.random.Random
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: MainViewModel by viewModels()
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: MainViewModel by viewModels {viewModelFactory}
 
     private lateinit var navController: NavController
     private lateinit var  navHostFragment:NavHostFragment
@@ -36,6 +34,8 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         actionBar?.setDisplayHomeAsUpEnabled(false)
+
+        (applicationContext as App).provideAppComponent().inject(this)
 
         viewModel.checkUserExists()
 
@@ -65,20 +65,21 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     ) {
         viewModel.destinationChanged(destination)
     }
-    fun getNavGraph():NavGraph{
+    private fun getNavGraph():NavGraph{
             val navGraph = navHostFragment.navController.navInflater.inflate(
                 R.navigation.auth_graph
             )
             val random = (1..4).random()
             if (random == 1){
                 Log.w("random 1", random.toString())
-                navGraph.startDestination = R.id.loginFragment
+                navGraph.setStartDestination(R.id.loginFragment)
             }else{
                 Log.w("random 2", random.toString())
-                navGraph.startDestination = R.id.homeFragment
+                navGraph.setStartDestination(R.id.homeFragment)
             }
         return navGraph
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

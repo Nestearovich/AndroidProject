@@ -7,5 +7,5 @@ import retrofit2.http.GET
 interface ApiServise  {
 
     @GET("/nkuYRM")
-    suspend fun getData(): Response<ItemsResponse>
+    suspend fun getData(): retrofit2.Response<ItemsResponse>
 }

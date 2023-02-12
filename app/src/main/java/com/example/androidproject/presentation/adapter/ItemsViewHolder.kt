@@ -20,7 +20,7 @@ class ItemsViewHolder(
        val imageView = view.findViewById<ImageView>(R.id.image)
 val deleteView = view.findViewById<ImageView>(R.id.idelete)
        val fav = view.findViewById<ImageView>(R.id.btnFav)
-       name.text = itemsModel.descripstion
+       name.text = itemsModel.description
 
        Picasso.get().load(Uri.parse(itemsModel.image)).into(imageView)
 
@@ -30,12 +30,14 @@ val deleteView = view.findViewById<ImageView>(R.id.idelete)
 
        itemView.setOnClickListener {
            itemsListener.onElementSelected(
-               itemsModel.descripstion,
+               itemsModel.description,
            itemsModel.image)
        }
        deleteView.setOnClickListener {
-           itemsListener.onDeleteClicked(itemsModel.descripstion)
+           itemsListener.onDeleteClicked(itemsModel.description)
        }
+       fav.isSelected = itemsModel.isFavorite
+
        fav.setOnClickListener {
            fav.isSelected = !it.isSelected
        }

@@ -1,33 +1,32 @@
 package com.example.androidproject.presentation.home.items
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidproject.utils.BundleConstant.IMAGE
+import com.example.androidproject.App
 import com.example.androidproject.R
 import com.example.androidproject.presentation.Listner.ItemsListener
 import com.example.androidproject.presentation.adapter.ItemsAdapter
 import com.example.androidproject.presentation.home.ItemsViewModel
+import com.example.androidproject.utils.BaseFragment
 import com.example.androidproject.utils.BundleConstant.DESCRIPTION
+import com.example.androidproject.utils.BundleConstant.IMAGE
 import com.example.androidproject.utils.NavHelper.navigateWithBundle
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 
-@AndroidEntryPoint
-class ItemsFragment : Fragment(), ItemsListener {
+
+class ItemsFragment : BaseFragment(), ItemsListener {
 
     private lateinit var itemsAdapter: ItemsAdapter
 
-    private val viewModel: ItemsViewModel by viewModels()
-
+    private val viewModel: ItemsViewModel by viewModels{viewModelFactory}
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,17 +37,32 @@ class ItemsFragment : Fragment(), ItemsListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        (requireActivity().applicationContext as App).provideAppComponent().inject(this)
+
         itemsAdapter = ItemsAdapter(this)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = itemsAdapter
 
-        viewModel.getData()
-
-//        viewModel.items.observe(viewLifecycleOwner) { listItems ->
-//            itemsAdapter.submitList(listItems)
+        //Способ 1(фикс дублирование элементов)
+//        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+//            viewModel.getData.collect()
 //        }
+
+        //Способ 2(фикс дублирование элементов)
+//        viewModel.getData()
+//        viewModel.trigger.observe(viewLifecycleOwner){
+//            viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+//                it.collect()
+//            }
+//        }
+
+        //Способ 3(самый красивый и лёгкий)
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.getDataSimple()
+        }
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.items.catch {
@@ -61,9 +75,9 @@ class ItemsFragment : Fragment(), ItemsListener {
             }
         }
 
-//        viewModel.msg.observe(viewLifecycleOwner) { msg ->
-//            Toast.makeText(context, getString(msg), Toast.LENGTH_SHORT).show()
-//        }
+        viewModel.msg.observe(viewLifecycleOwner) { msg ->
+            Toast.makeText(context, getString(msg), Toast.LENGTH_SHORT).show()
+        }
 
         viewModel.bundle.observe(viewLifecycleOwner) { navBundle ->
             if (navBundle != null) {
@@ -95,7 +109,7 @@ class ItemsFragment : Fragment(), ItemsListener {
        viewModel.deleteItem(description)
     }
 
-    override fun onFavClicked(description: String) {
-        viewModel.onFavClicked(description)
+    override fun onFavClicked(description: String, isFavorite: Boolean) {
+        viewModel.onFavClicked(description, isFavorite)
     }
 }

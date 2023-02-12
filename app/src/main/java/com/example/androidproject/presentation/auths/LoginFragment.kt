@@ -1,24 +1,19 @@
 package com.example.androidproject.presentation.auths
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.example.androidproject.R
+import com.example.androidproject.App
 import com.example.androidproject.databinding.FragmentLoginBinding
-import com.example.androidproject.utils.NavHelper.navigate
 import com.example.androidproject.utils.NavHelper.navigateWithDeletedBackStack
-import dagger.hilt.android.AndroidEntryPoint
 
 
-@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private val viewModel: LoginViewModel by viewModels()
-
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -34,6 +29,9 @@ class LoginFragment : Fragment() {
     }
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
+
+            (requireActivity().applicationContext as App).provideAppComponent().inject(this)
+
             binding.btnLog.setOnClickListener {
                 viewModel.loginUser(
                     binding.edit1.text.toString(),

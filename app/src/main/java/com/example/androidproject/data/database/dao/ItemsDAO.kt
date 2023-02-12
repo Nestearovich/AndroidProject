@@ -2,7 +2,7 @@ package com.example.androidproject.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.IGNORE
+import androidx.room.OnConflictStrategy.Companion.IGNORE
 import androidx.room.Query
 import com.example.androidproject.data.database.FavoritesEntity
 import com.example.androidproject.data.database.ItemsEntity
@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ItemsDAO {
-
     @Insert
     fun insertItemsEntity(itemsEntity: ItemsEntity)
 
@@ -27,11 +26,12 @@ interface ItemsDAO {
     @Query("SELECT * FROM ItemsEntity WHERE description = :searchText")
     fun findItemEntityByDescription(searchText:String): ItemsEntity
 
-
-
     @Insert(onConflict = IGNORE)//IGNORE WHEN CONFLICT OCCRS
     fun insertFavoritesEntity(favoritesEntity: FavoritesEntity)
 
     @Query("SELECT * FROM favoritesEntity")
     fun getFavoriteEntities(): List<FavoritesEntity>
+
+    @Query("UPDATE itemsEntity SET isFavorite = :isFavorite WHERE description = :description")
+    fun addToFavorite(description: String, isFavorite: Boolean)
 }

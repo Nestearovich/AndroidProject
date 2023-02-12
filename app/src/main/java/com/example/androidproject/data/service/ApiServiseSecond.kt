@@ -12,7 +12,5 @@ interface ApiServiseSecond {
     suspend fun getPhotoById(@Path("id") photoInt: Int): Response<PhotoResponse>
 
     @GET("/photos")
-    suspend fun  getPhotoByTitle(
-        @Query("title") title: String
-    ): Response<List<PhotoResponse>>
+    suspend fun  getPhotoByTitle(@Query("title") title: String): Response<List<PhotoResponse>>
 }
