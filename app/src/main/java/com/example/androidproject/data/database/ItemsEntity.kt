@@ -14,6 +14,6 @@ data class ItemsEntity(
     val description: String,
     @ColumnInfo(name = "imageUrl3")
     val imageUrl:String,
-    @ColumnInfo("isFavorite")
+    @ColumnInfo(name = "isFavorite")
     val isFavorite: Boolean? = false,
 )
