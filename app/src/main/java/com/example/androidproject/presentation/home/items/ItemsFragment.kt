@@ -36,8 +36,6 @@ class ItemsFragment : BaseFragment(), ItemsListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         (requireActivity().applicationContext as App).provideAppComponent().inject(this)
 
         itemsAdapter = ItemsAdapter(this)
@@ -64,15 +62,20 @@ class ItemsFragment : BaseFragment(), ItemsListener {
             viewModel.getDataSimple()
         }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.items.catch {
-                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-            }.collect{flowList ->
-                flowList.collect{ list ->
-                    itemsAdapter.submitList(list)
-                }
+//        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+//            viewModel.items.catch {
+//                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+//            }.collect{flowList ->
+//                flowList.collect{ list ->
+//                    itemsAdapter.submitList(list)
+//                }
+//
+//            }
+//        }
 
-            }
+        viewModel.getData()
+        viewModel.items.observe(viewLifecycleOwner){
+            itemsAdapter.submitList(it)
         }
 
         viewModel.msg.observe(viewLifecycleOwner) { msg ->
