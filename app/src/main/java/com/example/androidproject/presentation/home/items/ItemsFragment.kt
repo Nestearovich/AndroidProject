@@ -1,10 +1,15 @@
 package com.example.androidproject.presentation.home.items
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -36,9 +41,42 @@ class ItemsFragment : BaseFragment(), ItemsListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         (requireActivity().applicationContext as App).provideAppComponent().inject(this)
+
+
+
+        val h: Handler = object : Handler() {
+            override fun handleMessage(msg: Message) {
+                if (msg.what === 0) {
+                    Log.w("ui can be updated", "called")
+                } else {
+                    Log.w("error", "shown")
+                }
+            }
+        }
+
+        val t: Thread = object : Thread() {
+            override fun run() {
+                Log.w("heavy work", "executing")
+                if (false) { //true
+                    //we can't update the UI from here so we'll signal our handler and it will do it for us.
+                    h.sendEmptyMessage(0)
+                } else {
+                    h.sendEmptyMessage(1)
+                }
+            }
+        }
+        t.start()
+
+
+
+
+//        Handler().postDelayed({navigateWithBundle(
+//            R.id.action_itemsFragment_to_detailFragment,
+//            bundleOf()
+//        )
+//        },2000)
+
 
         itemsAdapter = ItemsAdapter(this)
 
@@ -88,9 +126,9 @@ class ItemsFragment : BaseFragment(), ItemsListener {
                 Toast.makeText(context, "called", Toast.LENGTH_SHORT).show()
 
                 navigateWithBundle(
-                    R.id.action_itemsFragment_to_detailFragment,
-                    bundle
-                )
+          R.id.action_itemsFragment_to_detailFragment,
+           bundle)
+
                 viewModel.userNavigated()
             }
         }
@@ -113,3 +151,5 @@ class ItemsFragment : BaseFragment(), ItemsListener {
         viewModel.onFavClicked(description, isFavorite)
     }
 }
+
+
