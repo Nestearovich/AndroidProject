@@ -1,18 +1,16 @@
 package com.example.androidproject.presentation.home.items
 
 
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.androidproject.utils.BundleConstant.IMAGE
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentDetailBinding
-import com.squareup.picasso.Picasso
+import com.example.androidproject.utils.BundleConstant.IMAGE
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,7 +37,7 @@ class DetailFragment : Fragment() {
             val image = safeBundle.getString(IMAGE)
 
             viewBinding.textView3.text = description
-            Picasso.get().load(Uri.parse(image)).into(viewBinding.imageView)
+            //Picasso.get().load(Uri.parse(image)).into(viewBinding.imageView)
         }
 
         viewBinding.btnLogout.setOnClickListener {
@@ -50,7 +48,7 @@ class DetailFragment : Fragment() {
             if (it != null) {
                 val navGraph = findNavController().navInflater.inflate(it)
 
-                navGraph.startDestination = R.id.loginFragment
+                navGraph.setStartDestination(R.id.loginFragment)
                 findNavController().graph = navGraph
             }
         }

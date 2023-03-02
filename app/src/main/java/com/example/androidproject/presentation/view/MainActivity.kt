@@ -72,10 +72,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             val random = (1..4).random()
             if (random == 1){
                 Log.w("random 1", random.toString())
-                navGraph.startDestination = R.id.loginFragment
+                navGraph.setStartDestination(R.id.loginFragment)
             }else{
                 Log.w("random 2", random.toString())
-                navGraph.startDestination = R.id.homeFragment
+                navGraph.setStartDestination(R.id.homeFragment)
             }
         return navGraph
     }

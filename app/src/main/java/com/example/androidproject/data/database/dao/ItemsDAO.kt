@@ -2,11 +2,10 @@ package com.example.androidproject.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.IGNORE
+import androidx.room.OnConflictStrategy.Companion.IGNORE
 import androidx.room.Query
 import com.example.androidproject.data.database.FavoritesEntity
 import com.example.androidproject.data.database.ItemsEntity
-import com.example.androidproject.domain.model.ItemsModel
 
 
 @Dao

@@ -1,15 +1,13 @@
 package com.example.androidproject.presentation.home.items
 
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.androidproject.databinding.FragmentSearchBinding
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,7 +46,7 @@ class SearchFragment : Fragment() {
 
         viewModel.items.observe(viewLifecycleOwner){
             viewBinding.description.text = it.descripstion
-            Picasso.get().load(Uri.parse(it.image)).into(viewBinding.image)
+           // Picasso.get().load(Uri.parse(it.image)).into(viewBinding.image)
         }
     }
 }
