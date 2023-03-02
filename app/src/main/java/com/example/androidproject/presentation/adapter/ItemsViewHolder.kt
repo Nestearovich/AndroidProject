@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidproject.presentation.Listner.ItemsListener
 import com.example.androidproject.R
 import com.example.androidproject.domain.model.ItemsModel
-import com.squareup.picasso.Picasso
+
 
 class ItemsViewHolder(
     private val view:View,
@@ -22,7 +22,7 @@ val deleteView = view.findViewById<ImageView>(R.id.idelete)
        val fav = view.findViewById<ImageView>(R.id.btnFav)
        name.text = itemsModel.descripstion
 
-       Picasso.get().load(Uri.parse(itemsModel.image)).into(imageView)
+       //Picasso.get().load(Uri.parse(itemsModel.image)).into(imageView)
 
        imageView.setOnClickListener{
            itemsListener.onClick()

@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.androidproject.utils.BundleConstant.IMAGE
 import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentDetailBinding
-import com.squareup.picasso.Picasso
+
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,7 +39,7 @@ class DetailFragment : Fragment() {
             val image = safeBundle.getString(IMAGE)
 
             viewBinding.textView3.text = description
-            Picasso.get().load(Uri.parse(image)).into(viewBinding.imageView)
+           // Picasso.get().load(Uri.parse(image)).into(viewBinding.imageView)
         }
 
         viewBinding.btnLogout.setOnClickListener {
@@ -52,7 +52,7 @@ class DetailFragment : Fragment() {
             if (it != null) {
                 val navGraph = findNavController().navInflater.inflate(it)
 
-                navGraph.startDestination = R.id.loginFragment
+                navGraph.setStartDestination(R.id.loginFragment)
                 findNavController().graph = navGraph
             }
         }

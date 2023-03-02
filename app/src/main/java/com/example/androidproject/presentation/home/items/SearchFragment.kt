@@ -14,7 +14,7 @@ import com.example.androidproject.R
 import com.example.androidproject.databinding.FragmentSearchBinding
 import com.example.androidproject.presentation.home.items.service.MusicPlayer
 import com.google.android.material.animation.AnimationUtils
-import com.squareup.picasso.Picasso
+
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,7 +52,7 @@ class SearchFragment : Fragment() {
         })
         viewModel.items.observe(viewLifecycleOwner){
             viewBinding.description.text = it.descripstion
-            Picasso.get().load(Uri.parse(it.image)).into(viewBinding.image)
+            //Picasso.get().load(Uri.parse(it.image)).into(viewBinding.image)
         }
 
 

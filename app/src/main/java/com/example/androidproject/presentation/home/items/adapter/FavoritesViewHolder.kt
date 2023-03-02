@@ -11,7 +11,7 @@ import com.example.androidproject.databinding.ItemFavoriteBinding
 import com.example.androidproject.domain.model.FavoritesModel
 import com.example.androidproject.domain.model.ItemsModel
 import com.example.androidproject.presentation.Listner.ItemsListener
-import com.squareup.picasso.Picasso
+
 
 class FavoritesViewHolder(
     private val viewBinding: ItemFavoriteBinding,
@@ -20,7 +20,7 @@ class FavoritesViewHolder(
 
     fun bind(favItems:FavoritesModel){
         viewBinding.tvName.text = favItems.descripstion
-        Picasso.get().load(Uri.parse(favItems.image)).into(viewBinding.image)
+       // Picasso.get().load(Uri.parse(favItems.image)).into(viewBinding.image)
 
     }
 }

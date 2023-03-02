@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.activity.viewModels
+
 import androidx.appcompat.app.ActionBar
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -20,6 +21,7 @@ import com.example.androidproject.presentation.auths.LoginFragment
 import com.example.androidproject.presentation.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
+import kotlin.text.Typography.dagger
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
@@ -72,10 +74,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             val random = (1..4).random()
             if (random == 1){
                 Log.w("random 1", random.toString())
-                navGraph.startDestination = R.id.loginFragment
+                navGraph.setStartDestination(R.id.loginFragment)
             }else{
                 Log.w("random 2", random.toString())
-                navGraph.startDestination = R.id.homeFragment
+                navGraph.setStartDestination(R.id.homeFragment)
             }
         return navGraph
     }
